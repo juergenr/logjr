@@ -1,0 +1,4 @@
+logjr
+=====
+
+simple logging library
