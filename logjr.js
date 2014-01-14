@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('ddddd');
-
 (function(context, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['logjr'], factory);
@@ -13,15 +11,15 @@ console.log('ddddd');
 }(this, function() {
 
   function logjr() {
-      var Logger = function(scope) {
+      var Logger = function(scope, appid) {
           //this.format= "{t} [{l}]: {m}   {c}"; 
-          this.format= "{t} {a}[{l}] {s}: {m}"; 
-          this.logLevel= "";
-          this.logLevelN= -1; 
-          this.scope= scope; 
+          this.format = "{t} {a}[{l}] {i}:{s}: {m}"; 
+          this.logLevel = "";
+          this.logLevelN = -1; 
+          this.scope =  scope || ""; 
           this.consoleEnabled = false;
           this.server = "http://localhost:8777";
-          this.app = "";
+          this.appId = getAppIdFromQuery() || appid || '';
 
           this.setLogLevel("debug");
       };
@@ -37,11 +35,14 @@ console.log('ddddd');
               return result;
           }    
       }
-      function getLogLevel() {
+      function getLogLevelFromQuery() {
           var q = getQuery();
           return q && q['loglevel']
       }
-
+      function getAppIdFromQuery() {
+          var q = getQuery();
+          return q && q['appid']
+      }
 
       Logger.prototype = {       
           rerror: function(msg) {
@@ -100,7 +101,7 @@ console.log('ddddd');
           xmlhttp.open("POST", this.server, true);
           xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
               xmlhttp.send(txt);
-        },
+          },
           _getClass: function (level) {
               if (!level)
                   level = 1;
@@ -136,6 +137,7 @@ console.log('ddddd');
               s = s.replace("{l}", (level + "   ".substr(0,5-level.length)).toUpperCase());
               s = s.replace("{m}", msg);
               s = s.replace("{s}", this.scope);
+              s = s.replace("{i}", this.appId);
               s = s.replace("{c}", this._getClass(4));
               return s;
           },
@@ -143,7 +145,7 @@ console.log('ddddd');
               logjr.format = format;
           },
           setLogLevel: function (logLevel) {
-              this.logLevel = getLogLevel() || logLevel;
+              this.logLevel = getLogLevelFromQuery() || logLevel;
               if (this.logLevel.toLowerCase() === "off")
                   this.logLevelN = 0;
               if (this.logLevel.toLowerCase() === "error")
@@ -162,6 +164,9 @@ console.log('ddddd');
           },
           setLoggingServer: function(server) {
               this.server = server; 
+          },
+          setAppId: function(appId) {
+              this.appId = appId; 
           }
       };
 
@@ -175,7 +180,7 @@ console.log('ddddd');
           error: console.error,
 
           setConsoleLogLevel: function (logLevel) {
-              this.logLevel = getLogLevel() || logLevel;
+              this.logLevel = getLogLevelFromQuery() || logLevel;
               if (this.logLevel.toLowerCase() === "off")
                   this.logLevelN = 0;
               if (this.logLevel.toLowerCase() === "error")
