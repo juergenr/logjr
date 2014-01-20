@@ -35,9 +35,9 @@ Methods:
 * setRemoteEnabled(boolean)	    //default true
 * setLoggingServer(string)		//default "http://localhost:8777"
 * setLogLevel(string)			//default "debug"
-* setFormat(string)				//default "{t} {a}[{l}] {i}:{s}: {m}"; 
+* setFormat(string)				//default "{t} {r}[{l}] {a}:{s}: {m}"; 
 
-Format e.g. "{t} {a}[{l}] {i}:{s}: {m}":
+Format
 * {t}: Timestamp  e.g. 10:08:20.032
 * {l}: level  e.g. [ERROR]
 * {m}: message
@@ -46,6 +46,7 @@ Format e.g. "{t} {a}[{l}] {i}:{s}: {m}":
 * {c}: source
 * {t}: stack trace
 * {r}: remote address only in remote log
+e.g. "{t} {r}[{l}] {a}:{s}: {m}" -> 17:54:49.859 127.0.0.1 [ERROR] appid:logger1: test error
 
 Url Control:
 * loglevel=log
