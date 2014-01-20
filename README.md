@@ -19,14 +19,6 @@ Usage
 ```
 
 
-###Use standard console
-The loglevel can be set by programmatically by ```logjr.setConsoleLogLevel("log");``` or by adding loglevel=log to the URL.
-```
-logjr.setConsoleLogLevel("log");
-console.debug('debug');  //No output because of loglevel="log"
-console.warn('warn');
-```
-
 ###Use logger
 ```
 var log = logjr.getLogger('scope', 'appid');  
@@ -71,6 +63,14 @@ node server.js
 ###See the Logging information in an second browser
 Start browser with http://localhost:8777
 
+
+###Add Loglevel to standard console
+The loglevel can be set by programmatically by ```logjr.setConsoleLogLevel("log");``` or by adding loglevel=log to the URL.
+```
+logjr.setConsoleLogLevel("log");
+console.debug('debug');  //No output because of loglevel="log"
+console.warn('warn');
+```
 
 ToDo
 ----
