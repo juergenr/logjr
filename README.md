@@ -46,6 +46,7 @@ Format
 * {c}: source
 * {t}: stack trace
 * {r}: remote address only in remote log
+
 e.g. "{t} {r}[{l}] {a}:{s}: {m}" -> 17:54:49.859 127.0.0.1 [ERROR] appid:logger1: test error
 
 Url Control:
