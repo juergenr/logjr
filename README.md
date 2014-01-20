@@ -1,7 +1,7 @@
 logjr
 =====
 
-simple logging library for the browser
+simple browser logging library
 
 Features
 --------
@@ -9,46 +9,77 @@ Features
 * remote logging to included node.js logging server
 * logs formatting
 * write to file (on server side)
-* browser to watch remote logs
+* browser page to watch remote logs
 
 Usage
 -----
-#Use standard console
-
-The loglevel can be set by programmatically by ```logjr.setConsoleLogLevel("log");``` or by adding loglevel=log to the URL.
+###Include into page
 ```
 <script src="logjr.js"></script>
-<script type="text/javascript">
-	logjr.setConsoleLogLevel("log");
-    console.debug('debug');  //No output because of loglevel="log"
-    console.warn('warn');
-</script>
 ```
 
 
-#Use remote logging
-
-The loglevel can be set by programmatically by ```log.setLogLevel("log");``` or by adding loglevel=log to the URL.
+###Use standard console
+The loglevel can be set by programmatically by ```logjr.setConsoleLogLevel("log");``` or by adding loglevel=log to the URL.
 ```
-var log = logjr.getLogger();
+logjr.setConsoleLogLevel("log");
+console.debug('debug');  //No output because of loglevel="log"
+console.warn('warn');
+```
+
+###Use logger
+```
+var log = logjr.getLogger('scope', 'appid');  
 log.setLogLevel('log');
-log.rdebug('debug message');
-log.rlog('log message');
-log.rwarn('warning');
+log.debug('debug message');
+log.log('log message');
+log.info('log message');
+log.warn('warning');
+log.error('error message');
 ```
 
-#Start the logging server (shows the logging messages in the console):
+Methods:
+* setConsoleEnabled(boolean)	//default true
+* setRemoteEnabled(boolean)	    //default true
+* setLoggingServer(string)		//default "http://localhost:8777"
+* setLogLevel(string)			//default "debug"
+* setFormat(string)				//default "{t} {a}[{l}] {i}:{s}: {m}"; 
+
+Format e.g. "{t} {a}[{l}] {i}:{s}: {m}":
+* {t}: Timestamp  e.g. 10:08:20.032
+* {l}: level  e.g. [ERROR]
+* {m}: message
+* {s}: scope
+* {a}: appid
+* {c}: source
+* {t}: stack trace
+* {r}: remote address only in remote log
+
+Url Control:
+* loglevel=log
+* appid=prog1		//to differentiate multiple instances in the logfile
+* remote=false		//no remote output
+* console=false		//no console output
+
+
+###Start the logging server (shows the logging messages in the console):
 
 ```
 node server.js
 ```
 
-#See the Logging information in an second browser
+###See the Logging information in an second browser
 Start browser with http://localhost:8777
 
 
 ToDo
 ----
-* support other browsers beside Chrome
+* testing
+
+
+Credits
+-------
+[Stacktrace.js](https://github.com/stacktracejs/stacktrace.js)
+
 
 

@@ -2,37 +2,31 @@
 <html>
 <head>
 	<title>Example usage of logjr</title>
-	<script src="logjr.js"></script>
+
+	<script type="text/javascript" src="logjr.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
-		//logjr.setConsoleLogLevel("log");
+        //standard console
+		logjr.setConsoleLogLevel("log");
         console.debug('debug');
         console.warn('warn');
-        //console.log('log');
         
         //------------------------------------
-        
-		var log = logjr.getLogger();
-		function jr() {
-		    log.rerror('test ----');
-		}
-		jr();
-		/*log.rerror('test2 ----');
+
+        //Use logger
+        var log = logjr.getLogger("logger1", "appid");
+        function test() {
+			log.error('test error');
+		}     
+        test();
+        log.log('log message');
+        log.setLogLevel("info");
+        log.log('should not be shown');
 		
-        */
+		var log2 = logjr.getLogger('logger2');
+		log2.log('other message');
 
-		var log2 = logjr.getLogger('scope2');
-		log2.rdebug('kicker');
-		log2.rlog('kicker');
-		log2.rwarn('kicker');
-		//log..setLogLevel()
-
-        /*
-		logjr.sendLog('dddd');
-		logjr.sendLog('dertert ert ert ddd');
-		logjr.sendLog('ddertöäöäöäöäöäßßß ßßß dd');
-        */
 	</script>
 </body>
 </html>

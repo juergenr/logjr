@@ -24,7 +24,7 @@ http.createServer(function (request, res) {
 
         request.on("end", function () {
             //add address
-            data = data.replace("{a}", request.connection.remoteAddress + " ");
+            data = data.replace("{r}", request.connection.remoteAddress + " ");
 
             //add to array
             logs.push(data + "\r\n");
@@ -38,7 +38,7 @@ http.createServer(function (request, res) {
             var dt = new Date();
             var y = dt.getFullYear();
             var m = "0"+(dt.getMonth()+1);
-            var d = "0"+dt.getDay();
+            var d = "0"+dt.getDate();
             var file = y +"."+ m.substr(m.length - 2) +"."+  d.substr(d.length - 2)+ ".log";
             fs.appendFile(file, data + "\r\n", function (err) {
                 if (err)
